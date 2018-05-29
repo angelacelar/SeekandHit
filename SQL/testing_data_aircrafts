@@ -15,8 +15,3 @@ INSERT INTO "aircrafts" (member_id,aircraft_id) VALUES (20,61,'F'),(20,62,'T'),(
 INSERT INTO "aircrafts" (member_id,aircraft_id) VALUES (1,71,'T'),(17,72,'F'),(2,73,'T'),(14,74,'T'),(3,75,'T'),(14,76,'T'),(9,77,'F'),(6,78,'F'),(8,79,'F'),(4,80,'F');
 INSERT INTO "aircrafts" (member_id,aircraft_id) VALUES (17,81,'F'),(3,82,'T'),(17,83,'T'),(9,84,'T'),(20,85,'F'),(16,86,'F'),(13,87,'T'),(2,88,'T'),(16,89,'F'),(18,90,'F');
 INSERT INTO "aircrafts" (member_id,aircraft_id) VALUES (19,91,'F'),(4,92,'F'),(8,93,'F'),(1,94,'F'),(6,95,'T'),(5,96,'F'),(5,97,'F'),(14,98,'T'),(9,99,'T'),(14,100,'F');
-
-
-
-
-'OVAKO VALJA'
