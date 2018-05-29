@@ -1,4 +1,4 @@
-# SeekandHit
+# SQL - Crew database
 This folder contains files with the SQL queries that are solution to the problem called "Crew database", and test data used for testign the solution.
 
                                                       Problem
