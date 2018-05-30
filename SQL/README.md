@@ -127,3 +127,21 @@ As we need the name of the most experienced crew member, table that joins on fir
 Second table values should be grouped by *member_id* values with *GROUP BY* clause. *LIMIT 1* gives us only one name, and the joined table is ordered by *COUNT(aircrafts.member_id)* column in *DESC* (descending order) so it's the most experienced crew member.
 *COALESCE()* function ensures that there is no *NULL* values: changes *NULL* value with wanted value (0).
 
+/*INNER JOIN* was used in order to use up less memory when. It was assumed that at least one crew member has experience with at least one aircraft in order to even finding the name of the most experienced one./
+
+####  4. Find name of the least experienced crew member - that one who knows least aircrafts (counting from zero)
+
+```bash
+SELECT crew_members.first_name FROM crew_members
+LEFT JOIN (
+	SELECT COUNT(aircrafts.member_id) AS most, aircrafts.member_id AS member_id
+	FROM aircrafts 
+	GROUP BY member_id 
+	) b
+ON crew_members.member_id = b.member_id
+ORDER BY COALESCE(b.most,0),crew_members.member_id ASC
+LIMIT 1;
+```
+*LEFT JOIN* was used in this query in order to include all crew members from *crew_members*, even the ones without any experience.
+To ensure their experience was marked as not *NULL* value in joined table, *COALESCE* function was used on second table's column *b.most* with *ORDER BY* clause in *ASC* (ascending) order.
+
