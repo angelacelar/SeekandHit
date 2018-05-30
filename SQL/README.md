@@ -1,5 +1,5 @@
 # SQL - Crew database
-This folder contains files with the SQL queries that are solution to the problem called "Crew database", and test data used for testing the solution.
+This folder contains SQL file first.sql with the SQL queries that are solution to the problem called "Crew database", and test data used for testing the solution.
 
 ## Problem
 
