@@ -44,6 +44,8 @@ SELECT crew_members.first_name FROM crew_members ORDER BY birth_date LIMIT 1 OFF
 
 
 'Find name of the most experienced crew member - that one who knows most aircrafts.'
+'/*INNER JOIN* was used in order to use up less memory when. It was assumed that at least one'
+'crew member has experience with at least one aircraft in order to even finding the name of the most experienced one./'
 SELECT crew_members.first_name FROM crew_members 
 INNER JOIN (
 	SELECT COUNT(aircrafts.member_id) AS most, aircrafts.member_id AS member_id 
