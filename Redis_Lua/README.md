@@ -59,14 +59,12 @@ In order to enable script effects replication, you need to issue the following L
 redis.replicate_commands()
 ```
 
-To assign a place to the plane, function *place_assignment* takes two arguments: a table, plane's ID:
-	1. Firstly, *place_assignment* calls another function *is_place_assigned* which takes two arguments: a table, plane's ID; to check if the plane already has it's assigned parking place. For every value in table checks if the planeID value is equal to it:
+To assign a place to the plane, function *place_assignment* takes two arguments: a table, plane's ID.
+
+Firstly, *place_assignment* calls another function *is_place_assigned* which takes two arguments: a table, plane's ID; to check if the plane already has it's assigned parking place. For every value in table checks if the planeID value is equal to it:
 		a. if equal -> return True
         	b. if no value from table is equal to planeID -> return False
-	If *is_place_assigned* returns True, *redis.pcall('get',planeID)* command is issued to get the planeID.
-    	2. Secondly, in for loop all values of table *parking* are checked with *redis.pcall('exists', planeID) ~= nil* and empty parking spots are inserted in local variable *free_places*.
-    	3. Thirdly, 
-    
+		
 ```bash
 function is_place_assigned(table,planeID)
 	for _, value in pairs(table) do
@@ -77,22 +75,32 @@ function is_place_assigned(table,planeID)
 	return false
 end
 ```
+If *is_place_assigned* returns True, *redis.pcall('get',planeID)* command is issued to get the planeID.
 
 ```bash
-function place_assignment(table,planeID)
-	
-	if is_place_assigned(parking,planeID) then
+if is_place_assigned(parking,planeID) then
 		--print("Plane's parking place is ")
 		redis.pcall('get',planeID)
 	end
-		
-	local free_places={}
+```
+
+Secondly, using *for* loop all values of table *parking* are checked with *redis.pcall('exists', planeID) ~= nil* and empty parking spots are inserted in local variable *free_places*.
+
+```bash
+local free_places={}
 	
 	for i=1, length(parking), 1 do
 		if redis.pcall('exists', planeID) ~= nil then
 			table.insert(free_places, i)
 		end
 	end
+```
+
+Thirdly, to assign a random parking place to the plane, in local variable *x* random seed function is called. If there are any free spots, in local variable *randomnum* is stored a random number in range [1,length of free_places].
+Finally, with *redis.pcall('set', parking[randomnum], planeID)* command, a parking place is assigned to the plane.
+
+```bash
+function place_assignment(table,planeID)
 	
 	local x=math.randomseed( os.time() )
 	
@@ -107,8 +115,9 @@ function place_assignment(table,planeID)
 end
 ```
 
+In third step, length of a local variable was necessary. It was given by function *length* which takes one argument (a table), and in a local variable counts how many keys does table have a.k.a. it's "length".
 
-
+```bash
 function length(table)
 	local count=0
 	for _, value in pairs(table) do
@@ -117,7 +126,12 @@ function length(table)
 	
 	return count
 end
+```
 
+To execute the script, local variable that calls the *place_assignment* function is called:
+
+```bash
 local find_it=place_assignment(parking, planeID)
 
 find_it()
+```
