@@ -115,7 +115,7 @@ class Robot(object):
                             else:
                                 continue
                     except:
-                        ""
+                        """Silently ignore"""
                 else:
                     raise ValueError
             except ValueError:
