@@ -59,13 +59,13 @@ In order to enable script effects replication, you need to issue the following L
 redis.replicate_commands()
 ```
 
-To assign a place to the plane, function *place_assignment* takes two arguments: a table, plane's ID.
-    - Firstly, *place_assignment* calls another function *is_place_assigned* which takes two arguments: a table, plane's ID; to check if the plane already has it's assigned parking place. For every value in table checks if the planeID value is equal to it;
-        - if equal -> return True
-        - if no value from table is equal to planeID -> return False
-      If *is_place_assigned* returns True, *redis.pcall('get',planeID)* command is issued to get the planeID.
-    - Secondly, in for loop all values of table *parking* are checked with *redis.pcall('exists', planeID) ~= nil* and empty parking spots are inserted in local variable *free_places*.
-    - Thirdly, 
+To assign a place to the plane, function *place_assignment* takes two arguments: a table, plane's ID:
+	1. Firstly, *place_assignment* calls another function *is_place_assigned* which takes two arguments: a table, plane's ID; to check if the plane already has it's assigned parking place. For every value in table checks if the planeID value is equal to it:
+		a. if equal -> return True
+        	b. if no value from table is equal to planeID -> return False
+	If *is_place_assigned* returns True, *redis.pcall('get',planeID)* command is issued to get the planeID.
+    	2. Secondly, in for loop all values of table *parking* are checked with *redis.pcall('exists', planeID) ~= nil* and empty parking spots are inserted in local variable *free_places*.
+    	3. Thirdly, 
     
 ```bash
 function is_place_assigned(table,planeID)
