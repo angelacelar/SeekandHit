@@ -51,7 +51,7 @@ INNER JOIN (
 	GROUP BY member_id 
 	) crewtb 
 ON crew_members.member_id = crewtb.member_id 
-ORDER BY COALESCE(crewtb.most) DESC
+ORDER BY COALESCE(crewtb.most,0) DESC
 LIMIT 1;
 
 
