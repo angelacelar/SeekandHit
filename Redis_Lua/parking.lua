@@ -1,6 +1,3 @@
---PRVO u info
---eval parking.lua 1 planeID 3
-
 --Selecting the Redis logical database. 
 --New connections always use the database 0.
 
